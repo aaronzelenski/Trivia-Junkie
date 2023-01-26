@@ -13,3 +13,6 @@ Are you a trivia junkie always looking for your next fix? Do you eat, sleep, and
 -	Secure login over https to retain top score  
 -	Top score and current score update with each question  
 -	Leaderboard with top scores from all people registered  
+
+
+**Spencer Peart and Aaron Zelenski will be pair programming this project**  
