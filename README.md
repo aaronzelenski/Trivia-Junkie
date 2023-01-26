@@ -6,4 +6,10 @@ Are you a trivia junkie always looking for your next fix? Do you eat, sleep, and
 [Trivia Junkie Layout.pdf](https://github.com/thisguyaaron/Trivia-Junkie/files/10514229/Trivia.Junkie.Layout.pdf)
 
 
-
+## Key Features:  
+-	Endless trivia
+-	Multiple choice options displayed with each question  
+-	Drop down menu for different trivia categories  
+-	Secure login over https to retain top score  
+-	Top score and current score update with each question  
+-	Leaderboard with top scores from all people registered  
