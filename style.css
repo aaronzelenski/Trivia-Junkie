@@ -90,11 +90,6 @@ span.psw {
   box-sizing: border-box;
 }
 
-
-.trivia-box{
-  max-width: 700px;
-}
-
 .container{
   color: #ddd;
   border-radius: 10px;
@@ -165,8 +160,9 @@ left: 50%;
   border: 1px solid #21bf73;
 }
 .btn-success{
-  padding: 5px 25px;
   background-color: #21bf73;
+  text-align: center;
+  width: 95px;
 }
 @media(max-width:576px){
   .question{
