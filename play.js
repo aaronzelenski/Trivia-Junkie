@@ -58,6 +58,7 @@
         if(userAnswer === currentQuestion.correctAnswer){
           // add to the number of correct answers
           numCorrect++;
+          updateScore(*numCorrect);
   
           // color the answers green
           answerContainers[questionNumber].style.color = 'lightgreen';
@@ -72,6 +73,11 @@
       // show number of correct answers out of total
       resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
     }
+
+    // updateScore(*numCorrect) {
+    //   const scoreEl = document.querySelector('#score');
+    //   scoreEl.textContent = score;
+    // }
   
     function showSlide(n) {
       slides[currentSlide].classList.remove('active-slide');
