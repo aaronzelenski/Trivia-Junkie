@@ -111,7 +111,8 @@
         answers: {
           a: "Drake",
           b: "Morgan Wallen",
-          c: "Hollow Coves"
+          c: "Hollow Coves",
+          d: "Taylor Swift"
         },
         correctAnswer: "a"
       },
