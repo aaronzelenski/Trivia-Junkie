@@ -38,11 +38,12 @@ input[type=text], input[type=password] {
 button {
   background-color: #04AA6D;
   color: white;
-  padding: 14px 20px;
+  padding: 10px 20px;
   margin: 8px 0;
   border: none;
   cursor: pointer;
-  width: 100%;
+  width: 40%;
+
 }
 
 /* Add a hover effect for buttons */
@@ -173,4 +174,22 @@ left: 50%;
 
 b{
   color: black;
+}
+
+
+
+
+.question{
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: black;
+}
+.answers {
+  margin-bottom: 20px;
+  text-align: left;
+  display: inline-block;
+}
+.answers label{
+  display: block;
+  margin-bottom: 10px;
 }
