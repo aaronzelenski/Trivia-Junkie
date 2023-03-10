@@ -58,7 +58,7 @@
         if(userAnswer === currentQuestion.correctAnswer){
           // add to the number of correct answers
           numCorrect++;
-          updateScore(*numCorrect);
+          // updateScore(*numCorrect);
   
           // color the answers green
           answerContainers[questionNumber].style.color = 'lightgreen';
