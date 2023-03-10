@@ -20,13 +20,13 @@ Are you a trivia junkie always looking for your next fix? Do you eat, sleep, and
 JS todo list 3/8:
 
 1. 1 working question (have the wrong answers and correct answer)
-   -- have feedback on that (e.g "you are correct!") 
+   -- have feedback on that (e.g "you are correct!")
 2. Implement the counter
 3. Change buttons on the bottom of play.html
 4. Test everything to make sure it works from start to finish.
 
-
 Future Needs 3/10:
+
 1. Make it accept multiple questions from a database
 2. Fail state and add score to leaderboard
-3. 
+3.
