@@ -124,7 +124,6 @@
       },
     ];
   
-    // Kick things off
     buildQuiz();
   
     // Pagination

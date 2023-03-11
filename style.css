@@ -177,6 +177,16 @@ b{
 }
 
 
+.players {
+  flex: 1;
+  width: 100%;
+  padding: 0.5em;
+}
+
+.player-name {
+  color: rgb(118, 190, 210);
+}
+
 
 
 .question{
@@ -193,3 +203,5 @@ b{
   display: block;
   margin-bottom: 10px;
 }
+
+
