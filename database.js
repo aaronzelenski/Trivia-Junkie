@@ -13,8 +13,8 @@ if (!userName) {
 const url = `mongodb+srv://simonsite:simonsitepassword@cluster0.rmijq8o.mongodb.net/`;
 
 const client = new MongoClient(url);
-const userCollection = client.db('simon').collection('user');
-const scoreCollection = client.db('simon').collection('score');
+const userCollection = client.db('trivia').collection('user');
+const scoreCollection = client.db('trivia').collection('score');
 
 function getUser(email) {
   return userCollection.findOne({ email: email });
