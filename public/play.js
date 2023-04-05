@@ -157,7 +157,7 @@
           c: "Hollow Coves",
           d: "Taylor Swift"
         },
-        correctAnswer: "a"
+        correctAnswer: "c"
       },
     ];
   
@@ -177,4 +177,12 @@
     previousButton.addEventListener("click", showPreviousSlide);
     nextButton.addEventListener("click", showNextSlide);
   })();
+
+
+
+
+
+
+
+
   
