@@ -143,6 +143,35 @@
     function showPreviousSlide() {
       showSlide(currentSlide - 1);
     }
+<<<<<<< HEAD
+=======
+
+    function parseData(data) {
+      const obj = document.getElementById('quiz');
+      obj.textContent = data.results[0].category;
+      myQuestions.pop();
+      myQuestions.push(data.results[0]);
+      return;
+    }
+
+    function aFunction(data){
+
+      callService("https://opentdb.com/api.php?amount=1&category=9&difficulty=easy&type=multiple", parseData);
+    
+    }
+    
+    function callService(url, displayCallback) {
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          displayCallback(data);
+        });
+    }
+
+    function addToQuestions(data) {
+
+    }
+>>>>>>> 41116346003c4a831dd9720cc8f8d1735e02d6a6
   
     // Variables
     const quizContainer = document.getElementById('quiz');
@@ -173,7 +202,11 @@
     showSlide(currentSlide);
   
     // Event listeners
+<<<<<<< HEAD
     submitButton.addEventListener('click', showResults);
+=======
+    submitButton.addEventListener('click', aFunction);
+>>>>>>> 41116346003c4a831dd9720cc8f8d1735e02d6a6
     previousButton.addEventListener("click", showPreviousSlide);
     nextButton.addEventListener("click", showNextSlide);
   })();
@@ -181,40 +214,9 @@
 
 
 
-function aFunction(data){
-
-  const questionEl = document.createElement();
-  const answerEl = document.createElement();
-
-
-
-
-}
-
-
-
-
-
-
-function callService(url, displayCallback) {
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      displayCallback(data);
-    });
-}
-
-const random = Math.floor(Math.random() * 1000);
-callService(
-  `https://picsum.photos/v2/list?page=${random}&limit=1`,
-  displayPicture
-);
-callService("https://opentdb.com/api.php?amount=1&category=9&difficulty=easy&type=multiple", aFunction);
 
 
 
 const quizContainer = document.getElementById('quiz');
 const resultsContainer = document.getElementById('results');
 const submitButton = document.getElementById('submit');
-
-  
