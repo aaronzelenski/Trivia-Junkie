@@ -120,39 +120,29 @@
       slides[currentSlide].classList.remove('active-slide');
       slides[n].classList.add('active-slide');
       currentSlide = n;
-      if(currentSlide === 0){
-        previousButton.style.display = 'none';
-      }
-      else{
-        previousButton.style.display = 'inline-block';
-      }
+      // if(currentSlide === 0){
+      //   previousButton.style.display = 'none';
+      // }
+      // else{
+      //   previousButton.style.display = 'inline-block';
+      // }
       if(currentSlide === slides.length-1){
-        nextButton.style.display = 'none';
+        // nextButton.style.display = 'none';
         submitButton.style.display = 'inline-block';
       }
       else{
-        nextButton.style.display = 'inline-block';
+        // nextButton.style.display = 'inline-block';
         submitButton.style.display = 'none';
       }
     }
-  
-    function showNextSlide() {
-      showSlide(currentSlide + 1);
-    }
-  
-    function showPreviousSlide() {
-      showSlide(currentSlide - 1);
-    }
 
     function parseData(data) {
-      const obj = document.getElementById('quiz');
-      obj.textContent = data.results[0].category;
       myQuestions.pop();
       myQuestions.push(data.results[0]);
       return;
     }
 
-    function aFunction(data){
+    function getNewQuestion() {
 
       callService("https://opentdb.com/api.php?amount=1&category=9&difficulty=easy&type=multiple", parseData);
     
@@ -166,10 +156,6 @@
         });
     }
 
-    function addToQuestions(data) {
-
-    }
-  
     // Variables
     const quizContainer = document.getElementById('quiz');
     const resultsContainer = document.getElementById('results');
@@ -186,12 +172,14 @@
         correctAnswer: "c"
       },
     ];
+    let score = 0;
   
+    getNewQuestion();
     buildQuiz();
   
     // Pagination
-    const previousButton = document.getElementById("previous");
-    const nextButton = document.getElementById("next");
+    // const previousButton = document.getElementById("previous");
+    // const nextButton = document.getElementById("next");
     const slides = document.querySelectorAll(".slide");
     let currentSlide = 0;
   
@@ -199,17 +187,7 @@
     showSlide(currentSlide);
   
     // Event listeners
-    submitButton.addEventListener('click', aFunction);
-    previousButton.addEventListener("click", showPreviousSlide);
-    nextButton.addEventListener("click", showNextSlide);
+    submitButton.addEventListener('click', showResults);
+    // previousButton.addEventListener("click", showPreviousSlide);
+    // nextButton.addEventListener("click", showNextSlide);
   })();
-
-
-
-
-
-
-
-const quizContainer = document.getElementById('quiz');
-const resultsContainer = document.getElementById('results');
-const submitButton = document.getElementById('submit');
