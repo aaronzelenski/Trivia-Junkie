@@ -144,8 +144,12 @@ function questionBuilder(data){
   myQuestions.push({
     question: question,
     answers: {
-      a:
+      a: correctAnswer,
+      b: incorrectAnswer[0],
+      c: incorrectAnswer[1],
+      d: incorrectAnswer[2],
+
     },
-    correctAnswer: 
+    correctAnswer: "a"
   })
 }
