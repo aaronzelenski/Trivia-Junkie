@@ -163,10 +163,6 @@
           displayCallback(data);
         });
     }
-
-    function addToQuestions(data) {
-
-    }
   
     // Variables
     const quizContainer = document.getElementById('quiz');
@@ -184,6 +180,7 @@
         correctAnswer: "c"
       },
     ];
+    const 
     let score = 0;
   
     getNewQuestion();

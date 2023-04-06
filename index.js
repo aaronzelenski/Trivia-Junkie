@@ -118,17 +118,11 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-
-
-
 function questionBuilder(data){
 
   let correctAnswer = "";
   let question = "";
   let incorrectAnswer = [];
-
-  const obj = document.getElementById('quiz');
-  obj.textContent = data.results[0].category;
 
   question = document.getElementById('quiz');
   question.textContent = data.results[0].question;
@@ -146,6 +140,12 @@ function questionBuilder(data){
   console.log(question);
   console.log(correctAnswer);
   console.log(incorrectAnswer);
-  
-}
 
+  myQuestions.push({
+    question: question,
+    answers: {
+      a:
+    },
+    correctAnswer: 
+  })
+}
