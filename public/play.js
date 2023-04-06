@@ -135,14 +135,6 @@
         submitButton.style.display = 'none';
       }
     }
-  
-    function showNextSlide() {
-      showSlide(currentSlide + 1);
-    }
-  
-    function showPreviousSlide() {
-      showSlide(currentSlide - 1);
-    }
 
     function parseData(data) {
       myQuestions.pop();
@@ -180,7 +172,6 @@
         correctAnswer: "c"
       },
     ];
-    const 
     let score = 0;
   
     getNewQuestion();
@@ -197,6 +188,6 @@
   
     // Event listeners
     submitButton.addEventListener('click', aFunction);
-    previousButton.addEventListener("click", showPreviousSlide);
-    nextButton.addEventListener("click", showNextSlide);
+    // previousButton.addEventListener("click", showPreviousSlide);
+    // nextButton.addEventListener("click", showNextSlide);
   })();
