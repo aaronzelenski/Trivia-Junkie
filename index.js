@@ -117,3 +117,35 @@ function setAuthCookie(res, authToken) {
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
+
+
+
+
+function questionBuilder(data){
+
+  let correctAnswer = "";
+  let question = "";
+  let incorrectAnswer = [];
+
+  const obj = document.getElementById('quiz');
+  obj.textContent = data.results[0].category;
+
+  question = document.getElementById('quiz');
+  question.textContent = data.results[0].question;
+
+  correctAnswer = document.getElementById('quiz');
+  correctAnswer.textContent = data.results[0].correct_answer;
+
+
+  incorrectAnswer = document.getElementById('quiz');
+
+  for(let i = 0; i < 4; i++){
+    incorrectAnswer.textContent = data.results[0].push(incorrect_answers[i]);
+  }
+
+  console.log(question);
+  console.log(correctAnswer);
+  console.log(incorrectAnswer);
+  
+}
+
