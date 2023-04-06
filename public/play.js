@@ -135,6 +135,14 @@
         submitButton.style.display = 'none';
       }
     }
+  
+    function showNextSlide() {
+      showSlide(currentSlide + 1);
+    }
+  
+    function showPreviousSlide() {
+      showSlide(currentSlide - 1);
+    }
 
     function parseData(data) {
       myQuestions.pop();
@@ -156,6 +164,10 @@
         });
     }
 
+    function addToQuestions(data) {
+
+    }
+  
     // Variables
     const quizContainer = document.getElementById('quiz');
     const resultsContainer = document.getElementById('results');
@@ -187,7 +199,7 @@
     showSlide(currentSlide);
   
     // Event listeners
-    submitButton.addEventListener('click', showResults);
-    // previousButton.addEventListener("click", showPreviousSlide);
-    // nextButton.addEventListener("click", showNextSlide);
+    submitButton.addEventListener('click', aFunction);
+    previousButton.addEventListener("click", showPreviousSlide);
+    nextButton.addEventListener("click", showNextSlide);
   })();
