@@ -67,49 +67,49 @@
         else{
           // color the answers red
           answerContainers[questionNumber].style.color = 'red';
-          saveScore(numCorrect);
+          // saveScore(numCorrect);
         }
       });
   
       // show number of correct answers out of total
-      resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+      // resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
     }
 
-    function saveScore(score) {
-      const userName = this.getPlayerName();
-      let scores = [];
-      const scoresText = localStorage.getItem('scores');
-      if (scoresText) {
-        scores = JSON.parse(scoresText);
-      }
-      scores = updateScores(userName, score, scores);
+    // function saveScore(score) {
+    //   const userName = this.getPlayerName();
+    //   let scores = [];
+    //   const scoresText = localStorage.getItem('scores');
+    //   if (scoresText) {
+    //     scores = JSON.parse(scoresText);
+    //   }
+    //   scores = updateScores(userName, score, scores);
   
-      localStorage.setItem('scores', JSON.stringify(scores));
-    }
+    //   localStorage.setItem('scores', JSON.stringify(scores));
+    // }
 
-    function updateScores(userName, score, scores) {
-      const date = new Date().toLocaleDateString();
-      const newScore = { name: userName, score: score, date: date };
+    // function updateScores(userName, score, scores) {
+    //   const date = new Date().toLocaleDateString();
+    //   const newScore = { name: userName, score: score, date: date };
   
-      let found = false;
-      for (const [i, prevScore] of scores.entries()) {
-        if (score > prevScore.score) {
-          scores.splice(i, 0, newScore);
-          found = true;
-          break;
-        }
-      }
+    //   let found = false;
+    //   for (const [i, prevScore] of scores.entries()) {
+    //     if (score > prevScore.score) {
+    //       scores.splice(i, 0, newScore);
+    //       found = true;
+    //       break;
+    //     }
+    //   }
   
-      if (!found) {
-        scores.push(newScore);
-      }
+    //   if (!found) {
+    //     scores.push(newScore);
+    //   }
   
-      if (scores.length > 10) {
-        scores.length = 10;
-      }
+    //   if (scores.length > 10) {
+    //     scores.length = 10;
+    //   }
   
-      return scores;
-    }
+    //   return scores;
+    // }
 
     // updateScore(*numCorrect) {
     //   const scoreEl = document.querySelector('#score');
@@ -136,15 +136,15 @@
       }
     }
 
-    function parseData(data) {
-      myQuestions.pop();
-      myQuestions.push(data.results[0]);
-      return;
-    }
+    // function parseData(data) {
+    //   myQuestions.pop();
+    //   myQuestions.push(data.results[0]);
+    //   return;
+    // }
 
     function getNewQuestion() {
 
-      callService("https://opentdb.com/api.php?amount=1&category=9&difficulty=easy&type=multiple", parseData);
+      callService("https://opentdb.com/api.php?amount=1&category=9&difficulty=easy&type=multiple", questionBuilder);
     
     }
     
@@ -155,27 +155,49 @@
           displayCallback(data);
         });
     }
+
+    function questionBuilder(data){
+
+      let correctAnswer = "";
+      let question = "";
+      let incorrectAnswer = [];
+    
+      
+      question = data.results[0].question;
+    
+      correctAnswer = data.results[0].correct_answer;
+    
+      for(let i = 0; i < 3; i++){
+        incorrectAnswer.push(data.results[0].incorrect_answers[i])
+      }
+    
+      console.log(question);
+      console.log(correctAnswer);
+      console.log(incorrectAnswer);
+    
+      myQuestions.pop();
+      myQuestions.push({
+        question: question.toString(),
+        answers: {
+          a: correctAnswer.toString(),
+          b: incorrectAnswer[0].toString(),
+          c: incorrectAnswer[1].toString(),
+          d: incorrectAnswer[2].toString()
+        },
+        correctAnswer: "a"
+      })
+      buildQuiz();
+      return;
+    }
   
     // Variables
     const quizContainer = document.getElementById('quiz');
     const resultsContainer = document.getElementById('results');
     const submitButton = document.getElementById('submit');
-    const myQuestions = [
-      {
-        question: "Which artist is from Canada?",
-        answers: {
-          a: "Drake",
-          b: "Morgan Wallen",
-          c: "Hollow Coves",
-          d: "Taylor Swift"
-        },
-        correctAnswer: "c"
-      },
-    ];
+    const myQuestions = [];
     let score = 0;
   
     getNewQuestion();
-    buildQuiz();
   
     // Pagination
     // const previousButton = document.getElementById("previous");
@@ -187,7 +209,7 @@
     showSlide(currentSlide);
   
     // Event listeners
-    submitButton.addEventListener('click', aFunction);
+    submitButton.addEventListener('click', showResults);
     // previousButton.addEventListener("click", showPreviousSlide);
     // nextButton.addEventListener("click", showNextSlide);
   })();
