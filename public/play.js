@@ -37,13 +37,17 @@
       // finally combine our output list into one string of HTML and put it on the page
       quizContainer.innerHTML = output.join('');
 
-      showSlide(0);
+      slides = document.querySelectorAll(".slide");
+      currentSlide = 0;
+
+      showSlide(currentSlide);
     }
   
     function showResults(){
   
       // gather answer containers from our quiz
       const answerContainers = quizContainer.querySelectorAll('.answers');
+      let isCorrect;
   
       myQuestions.forEach( (currentQuestion, questionNumber) => {
   
@@ -53,13 +57,15 @@
   
         if(userAnswer === currentQuestion.correctAnswer){
           answerContainers[questionNumber].style.color = 'lightgreen';
-          return true;
+          isCorrect = true;
         }
         else{
           answerContainers[questionNumber].style.color = 'red';
-          return false;
+          isCorrect = false;
         }
       });
+
+      return isCorrect;
     }
 
     // function saveScore(score) {
@@ -111,38 +117,38 @@
       submitButton.style.display = 'inline-block';
     }
 
-    async function playGame() {
+    // async function playGame() {
 
-      let correct = true;
-      let score = 0;
+    //   let correct = true;
+    //   let score = 0;
       
-      while (correct) {
+    //   while (correct) {
 
-        await waitUserInput();
-        correct = showResults();
+    //     await waitUserInput();
+    //     correct = showResults();
 
-        if (correct) {
-          score += 1;
-          //change submit button text
+    //     if (correct) {
+    //       score += 1;
+    //       //change submit button text
           
-          await waitUserInput();
-          getNewQuestion();
-          //change submit button text back
-        }
-        else {
-          saveScore(score);
-          //change button to Play again
-          await waitUserInput();
-          location.reload();
-        }
+    //       await waitUserInput();
+    //       getNewQuestion();
+    //       //change submit button text back
+    //     }
+    //     else {
+    //       saveScore(score);
+    //       //change button to Play again
+    //       await waitUserInput();
+    //       location.reload();
+    //     }
 
-      }
-    }
+    //   }
+    // }
 
-    async function waitUserInput() {
-      while (next === false) await timeout(50); // pause script but avoid browser to freeze ;)
-      next = false;
-    }
+    // async function waitUserInput() {
+    //   while (next === false) await timeout(50); // pause script but avoid browser to freeze ;)
+    //   next = false;
+    // }
 
     async function saveScore(score) {
       const userName = this.getPlayerName();
@@ -241,8 +247,28 @@
       return;
     }
 
-    function next(next) {
-      next = true;
+    function gameTest() {
+      if (n === 1) {
+        correct = showResults();
+        if (correct) {
+          n = 2;
+          score += 1;
+          //change button text to next question
+        }
+        else {
+          saveScore(score);
+          n = 3;
+          //change button text to new game
+        }
+      }
+      else if (n === 2) {
+        getNewQuestion();
+        //change button text to submit
+        n = 1;
+      }
+      else {
+        location.reload();
+      }
     }
   
     // Variables
@@ -250,16 +276,19 @@
     const resultsContainer = document.getElementById('results');
     const submitButton = document.getElementById('submit');
     const myQuestions = [];
-    const timeout = async ms => new Promise(res => setTimeout(res, ms));
-    let next1 = false; // this is to be changed on user input
+    // const timeout = async ms => new Promise(res => setTimeout(res, ms));
+    // this is to be changed on user input
     let n = 1;
+    let correct = true;
+    let score = 0;
+    let slides;
+    let currentSlide;
+      
 
     // $('#submit').click(() => next = true);
-    submitButton.addEventListener("click", next(next1));
-
     getNewQuestion();
 
-    playGame();
+    submitButton.addEventListener("click", gameTest);
   
     // while (correct) {
     //   const slides = document.querySelectorAll(".slide");
