@@ -155,7 +155,7 @@
     }
 
     async function saveScore(score) {
-      const userName = this.getPlayerName();
+      const userName = getPlayerName();
       const date = new Date().toLocaleDateString();
       const newScore = { name: userName, score: score, date: date };
 
