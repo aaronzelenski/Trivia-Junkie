@@ -36,6 +36,8 @@
   
       // finally combine our output list into one string of HTML and put it on the page
       quizContainer.innerHTML = output.join('');
+
+      showSlide(0);
     }
   
     function showResults(){
@@ -43,36 +45,21 @@
       // gather answer containers from our quiz
       const answerContainers = quizContainer.querySelectorAll('.answers');
   
-      // keep track of user's answers
-      let numCorrect = 0;
-  
-      // for each question...
       myQuestions.forEach( (currentQuestion, questionNumber) => {
   
-        // find selected answer
         const answerContainer = answerContainers[questionNumber];
         const selector = `input[name=question${questionNumber}]:checked`;
         const userAnswer = (answerContainer.querySelector(selector) || {}).value;
   
-        // if answer is correct
         if(userAnswer === currentQuestion.correctAnswer){
-          // add to the number of correct answers
-          numCorrect++;
-          // updateScore(*numCorrect);
-  
-          // color the answers green
           answerContainers[questionNumber].style.color = 'lightgreen';
+          return true;
         }
-        // if answer is wrong or blank
         else{
-          // color the answers red
           answerContainers[questionNumber].style.color = 'red';
-          // saveScore(numCorrect);
+          return false;
         }
       });
-  
-      // show number of correct answers out of total
-      // resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
     }
 
     // function saveScore(score) {
@@ -120,27 +107,91 @@
       slides[currentSlide].classList.remove('active-slide');
       slides[n].classList.add('active-slide');
       currentSlide = n;
-      // if(currentSlide === 0){
-      //   previousButton.style.display = 'none';
-      // }
-      // else{
-      //   previousButton.style.display = 'inline-block';
-      // }
-      if(currentSlide === slides.length-1){
-        // nextButton.style.display = 'none';
-        submitButton.style.display = 'inline-block';
-      }
-      else{
-        // nextButton.style.display = 'inline-block';
-        submitButton.style.display = 'none';
+      
+      submitButton.style.display = 'inline-block';
+    }
+
+    async function playGame() {
+
+      let correct = true;
+      let score = 0;
+      
+      while (correct) {
+
+        await waitUserInput();
+        correct = showResults();
+
+        if (correct) {
+          score += 1;
+          //change submit button text
+          
+          await waitUserInput();
+          getNewQuestion();
+          //change submit button text back
+        }
+        else {
+          saveScore(score);
+          //change button to Play again
+          await waitUserInput();
+          location.reload();
+        }
+
       }
     }
 
-    // function parseData(data) {
-    //   myQuestions.pop();
-    //   myQuestions.push(data.results[0]);
-    //   return;
-    // }
+    async function waitUserInput() {
+      while (next === false) await timeout(50); // pause script but avoid browser to freeze ;)
+      next = false;
+    }
+
+    async function saveScore(score) {
+      const userName = this.getPlayerName();
+      const date = new Date().toLocaleDateString();
+      const newScore = { name: userName, score: score, date: date };
+
+      try {
+        const response = await fetch('/api/score', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(newScore),
+        });
+
+        // Store what the service gave us as the high scores
+        const scores = await response.json();
+        localStorage.setItem('scores', JSON.stringify(scores));
+      } catch {
+        // If there was an error then just track scores locally
+        updateScoresLocal(newScore);
+      }
+    }
+
+    function updateScoresLocal(newScore) {
+      let scores = [];
+      const scoresText = localStorage.getItem('scores');
+      if (scoresText) {
+        scores = JSON.parse(scoresText);
+      }
+
+      let found = false;
+      for (const [i, prevScore] of scores.entries()) {
+        if (newScore > prevScore.score) {
+          scores.splice(i, 0, newScore);
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        scores.push(newScore);
+      }
+
+      if (scores.length > 10) {
+        scores.length = 10;
+      }
+
+      localStorage.setItem('scores', JSON.stringify(scores));
+    }
+
 
     function getNewQuestion() {
 
@@ -189,27 +240,36 @@
       buildQuiz();
       return;
     }
+
+    function next(next) {
+      next = true;
+    }
   
     // Variables
     const quizContainer = document.getElementById('quiz');
     const resultsContainer = document.getElementById('results');
     const submitButton = document.getElementById('submit');
     const myQuestions = [];
-    let score = 0;
-  
+    const timeout = async ms => new Promise(res => setTimeout(res, ms));
+    let next1 = false; // this is to be changed on user input
+    let n = 1;
+
+    // $('#submit').click(() => next = true);
+    submitButton.addEventListener("click", next(next1));
+
     getNewQuestion();
+
+    playGame();
   
-    // Pagination
-    // const previousButton = document.getElementById("previous");
-    // const nextButton = document.getElementById("next");
-    const slides = document.querySelectorAll(".slide");
-    let currentSlide = 0;
+    // while (correct) {
+    //   const slides = document.querySelectorAll(".slide");
+    //   let currentSlide = 0;
   
-    // Show the first slide
-    showSlide(currentSlide);
+      
+    //   showSlide(currentSlide);
   
-    // Event listeners
-    submitButton.addEventListener('click', showResults);
+    
+      
     // previousButton.addEventListener("click", showPreviousSlide);
     // nextButton.addEventListener("click", showNextSlide);
   })();
