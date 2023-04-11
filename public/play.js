@@ -150,6 +150,10 @@
     //   next = false;
     // }
 
+    function getPlayerName() {
+      return localStorage.getItem('userName') ?? 'Mystery player';
+    }
+
     async function saveScore(score) {
       const userName = this.getPlayerName();
       const date = new Date().toLocaleDateString();
@@ -253,17 +257,19 @@
         if (correct) {
           n = 2;
           score += 1;
-          //change button text to next question
+          document.querySelector('#submit').textContent = 'Next Question'
+          document.querySelector('#score').textContent = "Score: " + score
+
         }
         else {
           saveScore(score);
           n = 3;
-          //change button text to new game
+          document.querySelector('#submit').textContent = 'Play Again'
         }
       }
       else if (n === 2) {
         getNewQuestion();
-        //change button text to submit
+        document.querySelector('#submit').textContent = 'Submit'
         n = 1;
       }
       else {
