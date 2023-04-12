@@ -205,7 +205,7 @@
 
     function getNewQuestion() {
 
-      callService("https://opentdb.com/api.php?amount=1&category=9&difficulty=easy&type=multiple", questionBuilder);
+      callService("https://opentdb.com/api.php?amount=1&difficulty=medium&type=multiple", questionBuilder);
     
     }
     
