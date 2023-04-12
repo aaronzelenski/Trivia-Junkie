@@ -251,8 +251,3 @@ div.about-container p{
   justify-content:center;
 }
 
-.form-control{
-  width: 100%;
-  flex-direction: column;
-  color: #04AA6D;
-}
