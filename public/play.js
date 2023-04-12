@@ -221,7 +221,7 @@
 
       let correctAnswer = "";
       let question = "";
-      let incorrectAnswer = [];
+      let answers = [];
     
       
       question = data.results[0].question;
@@ -229,23 +229,31 @@
       correctAnswer = data.results[0].correct_answer;
     
       for(let i = 0; i < 3; i++){
-        incorrectAnswer.push(data.results[0].incorrect_answers[i])
+        answers.push(data.results[0].incorrect_answers[i])
       }
+
+      let correctPosition = Math.floor(Math.random() * 4);
+      let correctLetter = String.fromCharCode('a'.charCodeAt(0) + correctPosition);
+
+      answers.push(correctAnswer);
+      let temp = answers[correctPosition];
+      answers[correctPosition] = answers[3];
+      answers[3] = temp;
     
       console.log(question);
       console.log(correctAnswer);
-      console.log(incorrectAnswer);
+      console.log(answers);
     
       myQuestions.pop();
       myQuestions.push({
         question: question.toString(),
         answers: {
-          a: correctAnswer.toString(),
-          b: incorrectAnswer[0].toString(),
-          c: incorrectAnswer[1].toString(),
-          d: incorrectAnswer[2].toString()
+          a: answers[0].toString(),
+          b: answers[1].toString(),
+          c: answers[2].toString(),
+          d: answers[3].toString()
         },
-        correctAnswer: "a"
+        correctAnswer: correctLetter
       })
       buildQuiz();
       return;
