@@ -166,6 +166,7 @@
           body: JSON.stringify(newScore),
         });
 
+        broadcastEvent(userName, GameEndEvent, newScore);
         // Store what the service gave us as the high scores
         const scores = await response.json();
         localStorage.setItem('scores', JSON.stringify(scores));
@@ -284,8 +285,45 @@
         location.reload();
       }
     }
+
+    function configureWebSocket() {
+      const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+      socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+      socket.onopen = (event) => {
+        displayMsg('system', 'game', 'connected');
+      };
+      socket.onclose = (event) => {
+        displayMsg('system', 'game', 'disconnected');
+      };
+      socket.onmessage = async (event) => {
+        const msg = JSON.parse(await event.data.text());
+        if (msg.type === GameEndEvent) {
+          displayMsg('player', msg.from, `scored ${msg.value.score}`);
+        } else if (msg.type === GameStartEvent) {
+          displayMsg('player', msg.from, `started a new game`);
+        }
+      };
+    }
+
+    function displayMsg(cls, from, msg) {
+      const chatText = document.querySelector('#player-messages');
+      chatText.innerHTML =
+        `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
+    }
+
+    function broadcastEvent(from, type, value) {
+      const event = {
+        from: from,
+        type: type,
+        value: value,
+      };
+      socket.send(JSON.stringify(event));
+    }
+
   
     // Variables
+    const GameEndEvent = 'gameEnd';
+    const GameStartEvent = 'gameStart';
     const quizContainer = document.getElementById('quiz');
     const resultsContainer = document.getElementById('results');
     const submitButton = document.getElementById('submit');
@@ -297,6 +335,11 @@
     let score = 0;
     let slides;
     let currentSlide;
+    let socket;
+
+    configureWebSocket();
+
+    broadcastEvent(getPlayerName(), GameStartEvent, {});
       
 
     // $('#submit').click(() => next = true);

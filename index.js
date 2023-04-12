@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const app = express();
 const DB = require('./database.js');
+const { peerProxy } = require('./peerProxy.js');
 
 const authCookieName = 'token';
 
@@ -19,7 +20,7 @@ app.use(cookieParser());
 app.use(express.static('public'));
 
 // Router for service endpoints
-var apiRouter = express.Router();
+const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 // CreateAuth token for a new user
@@ -69,11 +70,11 @@ apiRouter.get('/user/:email', async (req, res) => {
 });
 
 // secureApiRouter verifies credentials for endpoints
-var secureApiRouter = express.Router();
+const secureApiRouter = express.Router();
 apiRouter.use(secureApiRouter);
 
 secureApiRouter.use(async (req, res, next) => {
-  authToken = req.cookies[authCookieName];
+  const authToken = req.cookies[authCookieName];
   const user = await DB.getUserByToken(authToken);
   if (user) {
     next();
@@ -114,42 +115,8 @@ function setAuthCookie(res, authToken) {
   });
 }
 
-app.listen(port, () => {
+const httpService = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-function questionBuilder(data){
-
-  let correctAnswer = "";
-  let question = "";
-  let incorrectAnswer = [];
-
-  question = document.getElementById('quiz');
-  question.textContent = data.results[0].question;
-
-  correctAnswer = document.getElementById('quiz');
-  correctAnswer.textContent = data.results[0].correct_answer;
-
-
-  incorrectAnswer = document.getElementById('quiz');
-
-  for(let i = 0; i < 4; i++){
-    incorrectAnswer.textContent = data.results[0].push(incorrect_answers[i]);
-  }
-
-  console.log(question);
-  console.log(correctAnswer);
-  console.log(incorrectAnswer);
-
-  myQuestions.push({
-    question: question,
-    answers: {
-      a: correctAnswer,
-      b: incorrectAnswer[0],
-      c: incorrectAnswer[1],
-      d: incorrectAnswer[2],
-
-    },
-    correctAnswer: "a"
-  })
-}
+peerProxy(httpService);
