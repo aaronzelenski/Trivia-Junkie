@@ -295,7 +295,7 @@
       socket.onclose = (event) => {
         displayMsg('system', 'game', 'disconnected');
       };
-      socket.onmessage = async (event) => {
+      socket.onmessage = async function (event) {
         const msg = JSON.parse(await event.data.text());
         if (msg.type === GameEndEvent) {
           displayMsg('player', msg.from, `scored ${msg.value.score}`);
@@ -325,7 +325,6 @@
     const GameEndEvent = 'gameEnd';
     const GameStartEvent = 'gameStart';
     const quizContainer = document.getElementById('quiz');
-    const resultsContainer = document.getElementById('results');
     const submitButton = document.getElementById('submit');
     const myQuestions = [];
     // const timeout = async ms => new Promise(res => setTimeout(res, ms));
