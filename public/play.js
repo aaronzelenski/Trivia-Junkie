@@ -337,14 +337,14 @@
     let socket;
 
     configureWebSocket();
-
-    broadcastEvent(getPlayerName(), GameStartEvent, {});
       
 
     // $('#submit').click(() => next = true);
     getNewQuestion();
 
     submitButton.addEventListener("click", gameTest);
+
+    broadcastEvent(getPlayerName(), GameStartEvent, {});
   
     // while (correct) {
     //   const slides = document.querySelectorAll(".slide");
