@@ -17,7 +17,7 @@
             // ...add an HTML radio button
             answers.push(
               `<label>
-                <input type="radio" name="question${questionNumber}" value="${letter}">
+                <input type="radio" name="question${questionNumber}" value="${letter}" id="question${questionNumber}" style="black">
                 ${letter} :
                 ${currentQuestion.answers[letter]}
               </label>`
@@ -233,7 +233,7 @@
         answers.push(data.results[0].incorrect_answers[i])
       }
 
-      let correctPosition = Math.floor(Math.random() * 4);
+      correctPosition = Math.floor(Math.random() * 4);
       let correctLetter = String.fromCharCode('a'.charCodeAt(0) + correctPosition);
 
       answers.push(correctAnswer);
@@ -334,6 +334,7 @@
     let score = 0;
     let slides;
     let currentSlide;
+    let correctPosition;
     let socket;
 
     configureWebSocket();
