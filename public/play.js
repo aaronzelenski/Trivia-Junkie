@@ -62,6 +62,7 @@
         else{
           answerContainers[questionNumber].style.color = 'red';
           isCorrect = false;
+          window.alert("Wrong! The correct answer is:  " + currentQuestion.correctAnswer);
         }
       });
 
